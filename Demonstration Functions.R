@@ -1,7 +1,8 @@
 #### köyhyys, nälänhätä, sota, ilmastonmuutos
 
-# install.packages("finnsurveytext", type = "source")
+install.packages("finnsurveytext", type = "source")
 ## MAKE SURE YOU USE type = "source" because binaries haven't been built yet (27/8/24)
+# remotes::install_github("DARIAH-FI-Survey-Concept-Network/finnsurveytext")
 library(finnsurveytext)
 # install.packages("survey")
 library(survey)
