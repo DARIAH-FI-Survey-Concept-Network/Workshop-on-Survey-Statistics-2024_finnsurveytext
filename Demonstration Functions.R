@@ -1,16 +1,24 @@
 #### köyhyys, nälänhätä, sota, ilmastonmuutos
 
-install.packages("finnsurveytext", type = "source")
-## MAKE SURE YOU USE type = "source" because binaries haven't been built yet (27/8/24)
+##############################
+## Install and Load Package ##
+##############################
+
+install.packages("finnsurveytext")
+## Backup option
 # remotes::install_github("DARIAH-FI-Survey-Concept-Network/finnsurveytext")
+
 library(finnsurveytext)
-# install.packages("survey")
+install.packages("survey")
 library(survey)
 
 View(dev_coop)
 svy <- survey::svydesign(id = ~1, weights = ~paino, data = dev_coop)
 
-# PREPARE
+##############################
+#### Demo part 1: Prepare ####
+##############################
+
 df <- fst_prepare(data = dev_coop,
                   question = 'q11_3',
                   id = 'fsd_id',
@@ -20,7 +28,7 @@ df <- fst_prepare(data = dev_coop,
                   weights = 'paino',
                   add_cols = 'gender, region'
                   )
-
+# udpipe::udpipe_download_model(language = 'finnish-ftb')
 View(df)
 
 # prepare with svydesign object
@@ -44,7 +52,10 @@ df3 <- fst_prepare_svydesign(svydesign = svy,
 
 View(df3)
 
-# SUMMARY TABLES
+##############################
+#### Demo part 2: Explore ####
+##############################
+
 fst_summarise(data = df,
               desc = 'All responses' # DEFAULT VALUE
               )
@@ -56,9 +67,9 @@ fst_length_summary(data = df,
                    incl_sentences = TRUE # DEFAULT VALUE
                    )
 
+
 # IDENTIFICATION OF FREQUENT WORDS AND PHRASES
 # Wordcloud
-
 fst_wordcloud(data = df,
               pos_filter = NULL, # DEFAULT
               max = 100, # DEFAULT
@@ -123,7 +134,9 @@ fst_ngrams(data = df,
            ngrams = 2,
            use_column_weights = TRUE)
 
-# CONCEPT NETWORK
+################################
+# Demo part 3: Concept Network #
+################################
 
 fst_concept_network(data = df,
                     concepts = 'köyhyys, nälänhätä, sota',
@@ -133,7 +146,10 @@ fst_concept_network(data = df,
                     title = NULL # DEFAULT
                     )
 
-# COMPARISON
+##############################
+### Demo part 4: Comparison ##
+##############################
+
 fst_summarise_compare(data = df,
                       field = 'gender',
                       exclude_nulls = 'FALSE', # DEFAULT VALUE
@@ -200,8 +216,7 @@ fst_ngrams_compare(data = df3,
                    title_size = 15,
                    subtitle_size = 10)
 
-# COMPARISON CN
-
+# Comparison Concept Network
 fst_concept_network_compare(data = df3,
                             concepts = 'köyhyys, nälänhätä, sota, ilmastonmuutos',
                             field = 'gender',
@@ -216,5 +231,8 @@ fst_concept_network_compare(data = df3,
                             subtitle_size = 15)
 
 
-# R Shiny Demo
+##############################
+#### Demo part 5: R Shiny ####
+##############################
+
 runDemo()

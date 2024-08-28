@@ -39,5 +39,5 @@ df2 <- fst_prepare_svydesign(svydesign = survey,
                              add_cols = 'gender, region'
 )
 
-finnsurveytext::fst_pre
+
 
